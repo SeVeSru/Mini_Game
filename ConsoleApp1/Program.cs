@@ -33,8 +33,8 @@ namespace Game
             string player2Str = " X";
             string fieldStr = " #";
 
-            FieldOut(Field, player1Str, player2Str, fieldStr, SizeXY);
-            Console.ReadKey();
+            //FieldOut(Field, player1Str, player2Str, fieldStr, SizeXY);
+            //Console.ReadKey();
 
             int round = 2;
             do
@@ -45,7 +45,7 @@ namespace Game
 
                 int x = random.Next(1, 7), y = random.Next(1, 7);
                 InterfaceMove(round, x, y, Field, player1Str, player2Str, fieldStr, SizeXY);
-                Console.ReadKey();
+                //Console.ReadKey();
 
             } while (true);
         }
@@ -56,34 +56,42 @@ namespace Game
             string sx1, sy1;
             Console.Clear();
 
+            Console.WriteLine("Раунд " + move + "!\n");
             FieldOut(F, p1, p2, f, SizeXY);
-            Console.WriteLine("Dice drop: " + x + ", and " + y);
+            if (move % 2 == 0)
+            {
+                Console.WriteLine("Ходит 2 игрок (X)\nТебе выпало: " + x + " и " + y);
+            }
+            else
+            {
+                Console.WriteLine("Ходит 1 игрок (O)\nТебе выпало: " + x + " и " + y);
+            }
             do
             {
-                Console.Write("Place at: \nx(vertical): ");
+                Console.Write("Пожалуйста укажи кординаты: \nx(вертикаль): ");
                 sx1 = Console.ReadLine();
             } while (sx1 == "");
             do
             {
-                Console.Write("y(horizontal): ");
+                Console.Write("y(горизонталь): ");
                 sy1 = Console.ReadLine();
             } while (sy1 == "");
             x1 = Convert.ToInt32(sx1);
             y1 = Convert.ToInt32(sy1);
-            //Console.WriteLine();
-            if (move == 1)
-                for (int i = x1; i < x1 + x; i++)
-                {
-                    if (i > SizeXY)
+            Console.WriteLine();
+            //if (move == 1) //Реализация игры от угла к углу
+            for (int i = x1; i < x1 + x; i++)
+             {
+                    if (i >= SizeXY)
                         break;
                     for (int j = y1; j < y1 + y; j++)
                     {
-                        if (j > SizeXY)
+                        if (j >= SizeXY)
                             break;
                         F[i, j] = move;
                     }
-                }
-            else if (move == 2)
+             }
+            /*else if (move == 2) //Реализация игры от угла к углу
                 for (int i = x1; i < x1 + x; i++)
                 {
                     if (i > SizeXY)
@@ -94,7 +102,7 @@ namespace Game
                             break;
                         F[(SizeXY-1) - i, (SizeXY-1) - j] = move;
                     }
-                }
+                }*/
         }
 
         static void FieldOut(int[,] F, string p1, string p2, string f, int SizeXY)
