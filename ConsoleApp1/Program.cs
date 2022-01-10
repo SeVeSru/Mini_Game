@@ -74,16 +74,24 @@ namespace Game
             if (move == 1)
                 for (int i = x1; i < x1 + x; i++)
                 {
+                    if (i > SizeXY)
+                        break;
                     for (int j = y1; j < y1 + y; j++)
                     {
+                        if (j > SizeXY)
+                            break;
                         F[i, j] = move;
                     }
                 }
             else if (move == 2)
                 for (int i = x1; i < x1 + x; i++)
                 {
+                    if (i > SizeXY)
+                        break;
                     for (int j = y1; j < y1 + y; j++)
                     {
+                        if (j > SizeXY)
+                            break;
                         F[(SizeXY-1) - i, (SizeXY-1) - j] = move;
                     }
                 }
