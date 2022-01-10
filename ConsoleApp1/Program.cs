@@ -6,7 +6,17 @@ namespace Game
     {
         static void Main(string[] args)
         {
-            int SizeXY = 25;
+            int SizeXY;
+            Console.Write("Введите размер поля (По умолчанию 10): ");
+            string StringSizeXY = Console.ReadLine();
+            if (StringSizeXY == "")
+            {
+                SizeXY = 10;
+            }
+            else
+            {
+                SizeXY = Convert.ToInt32(StringSizeXY);
+            }
 
             int[,] Field = new int[SizeXY, SizeXY];
             Random random = new Random();
@@ -60,7 +70,7 @@ namespace Game
             } while (sy1 == "");
             x1 = Convert.ToInt32(sx1);
             y1 = Convert.ToInt32(sy1);
-            Console.WriteLine();
+            //Console.WriteLine();
             if (move == 1)
                 for (int i = x1; i < x1 + x; i++)
                 {
@@ -86,17 +96,17 @@ namespace Game
                 for (int j = 0; j < SizeXY+1; j++)
                 {
                     if (i == 0 && j == 0)
-                        Console.Write("   ");
-                    else if (i == 0 && j < (SizeXY/2-1))
+                        Console.Write("    ");
+                    else if (i == 0 && j < 11)
                         Console.Write(j - 1 + " ");
                     else if (i == 0 && j == SizeXY + 1)
                         Console.Write("");
-                    else if (i < (SizeXY / 2 - 1) && j == 0)
+                    else if (i < 11 && j == 0)
                         Console.Write(" " + (i - 1) + " ");
-                    else if (i < (SizeXY / 2 - 1) && j == SizeXY + 1)
+                    else if (i < 11 && j == SizeXY + 1)
                         Console.Write(" " + (SizeXY - i));
                     else if (i == SizeXY + 1 && j == SizeXY + 1)
-                        Console.Write("  ");
+                        Console.Write("   ");
                     else if (j == SizeXY + 1)
                         Console.Write(" " + (SizeXY - i));
                     else if (i == SizeXY + 1 && j == 0)
