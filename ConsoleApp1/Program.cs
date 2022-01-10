@@ -41,15 +41,23 @@ namespace Game
         static void InterfaceMove(int move, int x, int y, int[,] F, string p1, string p2, string f)
         {
             int x1, y1;
+            string sx1, sy1;
             Console.Clear();
 
             FieldOut(F, p1, p2, f);
             Console.WriteLine("Dice drop: " + x + ", and " + y);
-
-            Console.Write("Place at: \nx(vertical): ");
-            x1 = Convert.ToInt32(Console.ReadLine());
-            Console.Write("y(horizontal): ");
-            y1 = Convert.ToInt32(Console.ReadLine());
+            do
+            {
+                Console.Write("Place at: \nx(vertical): ");
+                sx1 = Console.ReadLine();
+            } while (sx1 == "");
+            do
+            {
+                Console.Write("y(horizontal): ");
+                sy1 = Console.ReadLine();
+            } while (sy1 == "");
+            x1 = Convert.ToInt32(sx1);
+            y1 = Convert.ToInt32(sy1);
             Console.WriteLine();
             if (move == 1)
                 for (int i = x1; i < x1 + x; i++)
