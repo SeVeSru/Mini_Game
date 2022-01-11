@@ -6,35 +6,110 @@ namespace Game
     {
         static void Main(string[] args)
         {
-            int SizeXY= 0;
+            int SizeXY = 0;
+            do
+            {
+                Console.Clear();
+                Console.WriteLine("Выберите режим игры:");
+                Console.WriteLine("1. Игрок против игрока)");
+                Console.WriteLine("2. Игрок против компьютера");
+                Console.WriteLine("0. Выход");
+                var Level = Console.ReadKey();
+                switch (Level.Key)
+                {
+                    case ConsoleKey.D1:
+                        SizeXY = SizeMenu();
+                        if (SizeXY > 0)
+                        {
+                            GamePVP(SizeXY);
+                            Console.Clear();
+                            Console.WriteLine("Сыграть еще?");
+                            Console.WriteLine("1. Да");
+                            Console.WriteLine("2. Нет");
+                            Level = Console.ReadKey();
+                            if (Level.Key == ConsoleKey.D1) SizeXY = 0;
+                        }
+                        break;
+                    case ConsoleKey.D2:
+                        SizeXY = SizeMenu();
+                        if (SizeXY > 0)
+                        {
+                            GamePVE(SizeXY);
+                            Console.Clear();
+                            Console.WriteLine("Сыграть еще?");
+                            Console.WriteLine("1. Да");
+                            Console.WriteLine("2. Нет");
+                            Level = Console.ReadKey();
+                            if (Level.Key == ConsoleKey.D1) SizeXY = 0;
+                        }
+                        break;
+                    case ConsoleKey.D0:
+                        Environment.Exit(0);
+                        break;
+                }
+            } while (SizeXY == 0);
+        }
+        static int SizeMenu()
+        {
+            Console.Clear();
             Console.WriteLine("Выберите уровень сложности:");
             Console.WriteLine("1. Легкий (10х10)");
             Console.WriteLine("2. Нормальный (20х20)");
             Console.WriteLine("3. Сложный (30х30)");
             Console.WriteLine("4. Ввести в ручную размерность");
-            Console.WriteLine("0. Выход");
+            Console.WriteLine("0. Назад");
             var Level = Console.ReadKey();
             switch (Level.Key)
             {
                 case ConsoleKey.D1:
-                    SizeXY = 10;
-                    break;
+                    return 10;
                 case ConsoleKey.D2:
-                    SizeXY = 20;
-                    break;
+                    return 20;
                 case ConsoleKey.D3:
-                    SizeXY = 30;
-                    break;
+                    return 30;
                 default:
                     Console.Clear();
                     Console.WriteLine("Введите размерность поля:");
-                    SizeXY = Convert.ToInt32(Console.ReadLine());
-                    break;
+                    return Convert.ToInt32(Console.ReadLine());
                 case ConsoleKey.D0:
-                    Environment.Exit(0);
-                    break;
+                    return 0;
+            }
+        }
+
+        static void GamePVP(int SizeXY)
+        {
+            int[,] Field = new int[SizeXY, SizeXY];
+            Random random = new Random();
+
+            for (int i = 0; i < SizeXY; i++)
+            {
+                for (int j = 0; j < SizeXY; j++)
+                {
+                    Field[i, j] = 0;
+                }
             }
 
+            string player1Str = " O";
+            string player2Str = " X";
+            string fieldStr = " #";
+            int win = 0;
+
+            int round = 2;
+            do
+            {
+                if (round == 1)
+                    round++;
+                else round = 1;
+
+                int x = random.Next(1, 7), y = random.Next(1, 7);
+                InterfaceMove(round, x, y, Field, player1Str, player2Str, fieldStr, SizeXY);
+                win = Winner(Field, SizeXY);
+
+            } while (win == 0);
+        }
+
+        static void GamePVE(int SizeXY)
+        {
             int[,] Field = new int[SizeXY, SizeXY];
             Random random = new Random();
 
@@ -154,7 +229,7 @@ namespace Game
             return 0;
         }
 
-            static void FieldOut(int[,] F, string p1, string p2, string f, int SizeXY)
+        static void FieldOut(int[,] F, string p1, string p2, string f, int SizeXY)
         {
             for (int i = 0; i < SizeXY+1; i++)
             {
