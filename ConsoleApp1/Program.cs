@@ -80,7 +80,11 @@ namespace Game
         {
             int[,] Field = new int[SizeXY, SizeXY];
             Random random = new Random();
-
+            int EndRandom = SizeXY / 2 + 2;
+            if (EndRandom > 10)
+            {
+                EndRandom = 10;
+            }
             for (int i = 0; i < SizeXY; i++)
             {
                 for (int j = 0; j < SizeXY; j++)
@@ -93,7 +97,6 @@ namespace Game
             string player2Str = " X";
             string fieldStr = " #";
             int win = 0;
-
             int round = 2;
             do
             {
@@ -101,7 +104,7 @@ namespace Game
                     round++;
                 else round = 1;
 
-                int x = random.Next(1, 7), y = random.Next(1, 7);
+                int x = random.Next(1, EndRandom), y = random.Next(1, EndRandom);
                 InterfaceMove(round, x, y, Field, player1Str, player2Str, fieldStr, SizeXY);
                 win = Winner(Field, SizeXY);
 
@@ -120,7 +123,11 @@ namespace Game
                     Field[i, j] = 0;
                 }
             }
-
+            int EndRandom = SizeXY / 2 + 2;
+            if (EndRandom > 10)
+            {
+                EndRandom = 10;
+            }
             string player1Str = " O";
             string player2Str = " X";
             string fieldStr = " #";
@@ -129,39 +136,27 @@ namespace Game
             int round = 1;
             do
             {
+                int x = random.Next(1, EndRandom), y = random.Next(1, EndRandom);
                 if (round == 1)
                 {
-                    int x = random.Next(1, 7), y = random.Next(1, 7);
                     InterfaceMove(round, x, y, Field, player1Str, player2Str, fieldStr, SizeXY);
-                    win = Winner(Field, SizeXY);
-                    if (win == 1)
-                    {
-                        Console.Clear();
-                        Console.WriteLine("---------------------");
-                        Console.WriteLine("!!!Выйграл 1 игрок!!!");
-                        Console.WriteLine("---------------------");
-                        FieldOut(Field, player1Str, player2Str, fieldStr, SizeXY);
-                        Console.WriteLine("\nНажмите любую клавишу что бы продолжить");
-                        Console.ReadKey();
-                    }
                     round = 2;
                 }
                 else
                 {
-                    int x = random.Next(1, 7), y = random.Next(1, 7);
                     InterfaceMovePC(round, x, y, Field, SizeXY);
-                    win = Winner(Field, SizeXY);
-                    if (win == 2)
-                    {
-                        Console.Clear();
-                        Console.WriteLine("---------------------");
-                        Console.WriteLine("!!!Выйграл 2 игрок!!!");
-                        Console.WriteLine("---------------------");
-                        FieldOut(Field, player1Str, player2Str, fieldStr, SizeXY);
-                        Console.WriteLine("\nНажмите любую клавишу что бы продолжить");
-                        Console.ReadKey();
-                    }
                     round = 1;
+                }
+                win = Winner(Field, SizeXY);
+                if (win == 1 || win == 2)
+                {
+                    Console.Clear();
+                    Console.WriteLine("---------------------");
+                    Console.WriteLine("!!!Выйграл "+win+" игрок!!!");
+                    Console.WriteLine("---------------------");
+                    FieldOut(Field, player1Str, player2Str, fieldStr, SizeXY);
+                    Console.WriteLine("\nНажмите любую клавишу что бы продолжить");
+                    Console.ReadKey();
                 }
 
             } while (win == 0);
@@ -228,9 +223,9 @@ namespace Game
             List<int> sx1 = new List<int>();
             List<int> sy1 = new List<int>();
 
-            for (int i = 0; i < SizeXY; i++)
+            for (int i = 0; i < SizeXY-x; i++)
             {
-                for (int j = 0; j < SizeXY; j++)
+                for (int j = 0; j < SizeXY-y; j++)
                 {
                     if (F[i, j] != 2)
                     {
