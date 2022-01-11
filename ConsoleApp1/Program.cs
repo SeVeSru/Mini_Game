@@ -49,6 +49,7 @@ namespace Game
             string player1Str = " O";
             string player2Str = " X";
             string fieldStr = " #";
+            int win = 0;
 
             int round = 2;
             do
@@ -59,8 +60,9 @@ namespace Game
 
                 int x = random.Next(1, 7), y = random.Next(1, 7);
                 InterfaceMove(round, x, y, Field, player1Str, player2Str, fieldStr, SizeXY);
+                win = Winner(Field, SizeXY);
 
-            } while (true);
+            } while (win == 0);
         }
 
         static void InterfaceMove(int move, int x, int y, int[,] F, string p1, string p2, string f, int SizeXY)
@@ -118,7 +120,41 @@ namespace Game
                 }*/
         }
 
-        static void FieldOut(int[,] F, string p1, string p2, string f, int SizeXY)
+        static int Winner(int[,] F, int SizeXY)
+        {
+            int win1 = 0;
+            int win2 = 0;
+            for (int i = 0; i < SizeXY; i++)
+            {
+                for (int j = 0; j < SizeXY; j++)
+                {
+                    if (F[i, j] == 1)
+                    {
+                        win1++;
+                    }
+                    else if (F[i, j] == 2)
+                    {
+                        win2++;
+                    }
+
+                    if (win1 >= (SizeXY * SizeXY) / 2)
+                    {
+                        Console.WriteLine("Выйграл 1 игрок");
+                        Console.ReadKey();
+                        return 1;
+                    }
+                    else if (win2 >= (SizeXY * SizeXY) / 2)
+                    {
+                        Console.WriteLine("Выйграл 2 игрок");
+                        Console.ReadKey();
+                        return 2;
+                    }
+                }
+            }
+            return 0;
+        }
+
+            static void FieldOut(int[,] F, string p1, string p2, string f, int SizeXY)
         {
             for (int i = 0; i < SizeXY+1; i++)
             {
