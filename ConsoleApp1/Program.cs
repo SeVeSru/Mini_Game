@@ -126,17 +126,23 @@ namespace Game
             string fieldStr = " #";
             int win = 0;
 
-            int round = 2;
+            int round = 1;
             do
             {
                 if (round == 1)
-                    round++;
-                else round = 1;
-
-                int x = random.Next(1, 7), y = random.Next(1, 7);
-                InterfaceMove(round, x, y, Field, player1Str, player2Str, fieldStr, SizeXY);
-                win = Winner(Field, SizeXY);
-
+                {
+                    int x = random.Next(1, 7), y = random.Next(1, 7);
+                    InterfaceMove(round, x, y, Field, player1Str, player2Str, fieldStr, SizeXY);
+                    win = Winner(Field, SizeXY);
+                    round = 2;
+                }
+                else
+                {
+                    int x = random.Next(1, 7), y = random.Next(1, 7);
+                    InterfaceMovePC(round, x, y, Field, SizeXY);
+                    win = Winner(Field, SizeXY);
+                    round = 1;
+                }
             } while (win == 0);
         }
 
@@ -193,6 +199,41 @@ namespace Game
                         F[(SizeXY-1) - i, (SizeXY-1) - j] = move;
                     }
                 }*/
+        }
+
+        static void InterfaceMovePC(int move, int x, int y, int[,] F, int SizeXY)
+        {
+            int x1, y1;
+            List<int> sx1 = new List<int>();
+            List<int> sy1 = new List<int>();
+
+            for (int i = 0; i < SizeXY-x; i++)
+            {
+                for (int j = 0; j < SizeXY-y; j++)
+                {
+                    if (F[i, j] != 2)
+                    {
+                        sx1.Add(i);
+                        sy1.Add(j);
+                    }
+                }
+            }
+
+            Random rnd = new Random();
+            var index = rnd.Next(sx1.Count);
+            x1 = sx1[index];
+            y1 = sy1[index];
+            for (int i = x1; i < x1 + x; i++)
+            {
+                if (i >= SizeXY)
+                    break;
+                for (int j = y1; j < y1 + y; j++)
+                {
+                    if (j >= SizeXY)
+                        break;
+                    F[i, j] = move;
+                }
+            }
         }
 
         static int Winner(int[,] F, int SizeXY)
