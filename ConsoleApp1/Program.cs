@@ -11,7 +11,7 @@ namespace Game
             {
                 Console.Clear();
                 Console.WriteLine("Выберите режим игры:");
-                Console.WriteLine("1. Игрок против игрока)");
+                Console.WriteLine("1. Игрок против игрока");
                 Console.WriteLine("2. Игрок против компьютера");
                 Console.WriteLine("0. Выход");
                 var Level = Console.ReadKey();
@@ -134,6 +134,16 @@ namespace Game
                     int x = random.Next(1, 7), y = random.Next(1, 7);
                     InterfaceMove(round, x, y, Field, player1Str, player2Str, fieldStr, SizeXY);
                     win = Winner(Field, SizeXY);
+                    if (win == 1)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("---------------------");
+                        Console.WriteLine("!!!Выйграл 1 игрок!!!");
+                        Console.WriteLine("---------------------");
+                        FieldOut(Field, player1Str, player2Str, fieldStr, SizeXY);
+                        Console.WriteLine("\nНажмите любую клавишу что бы продолжить");
+                        Console.ReadKey();
+                    }
                     round = 2;
                 }
                 else
@@ -141,8 +151,19 @@ namespace Game
                     int x = random.Next(1, 7), y = random.Next(1, 7);
                     InterfaceMovePC(round, x, y, Field, SizeXY);
                     win = Winner(Field, SizeXY);
+                    if (win == 2)
+                    {
+                        Console.Clear();
+                        Console.WriteLine("---------------------");
+                        Console.WriteLine("!!!Выйграл 2 игрок!!!");
+                        Console.WriteLine("---------------------");
+                        FieldOut(Field, player1Str, player2Str, fieldStr, SizeXY);
+                        Console.WriteLine("\nНажмите любую клавишу что бы продолжить");
+                        Console.ReadKey();
+                    }
                     round = 1;
                 }
+
             } while (win == 0);
         }
 
@@ -207,9 +228,9 @@ namespace Game
             List<int> sx1 = new List<int>();
             List<int> sy1 = new List<int>();
 
-            for (int i = 0; i < SizeXY-x; i++)
+            for (int i = 0; i < SizeXY; i++)
             {
-                for (int j = 0; j < SizeXY-y; j++)
+                for (int j = 0; j < SizeXY; j++)
                 {
                     if (F[i, j] != 2)
                     {
@@ -255,14 +276,14 @@ namespace Game
 
                     if (win1 >= (SizeXY * SizeXY) / 2)
                     {
-                        Console.WriteLine("Выйграл 1 игрок");
-                        Console.ReadKey();
+                        //Console.WriteLine("Выйграл 1 игрок");
+                        //Console.ReadKey();
                         return 1;
                     }
                     else if (win2 >= (SizeXY * SizeXY) / 2)
                     {
-                        Console.WriteLine("Выйграл 2 игрок");
-                        Console.ReadKey();
+                        //Console.WriteLine("Выйграл 2 игрок");
+                        //Console.ReadKey();
                         return 2;
                     }
                 }
