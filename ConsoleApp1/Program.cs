@@ -6,28 +6,32 @@ namespace Game
     {
         static void Main(string[] args)
         {
-            int SizeXY;
+            int SizeXY= 0;
             Console.WriteLine("Выберите уровень сложности:");
             Console.WriteLine("1. Легкий (10х10)");
             Console.WriteLine("2. Нормальный (20х20)");
             Console.WriteLine("3. Сложный (30х30)");
             Console.WriteLine("4. Ввести в ручную размерность");
-            int Level = Convert.ToInt32(Console.ReadLine());
-            switch (Level)
+            Console.WriteLine("0. Выход");
+            var Level = Console.ReadKey();
+            switch (Level.Key)
             {
-                case 1:
+                case ConsoleKey.D1:
                     SizeXY = 10;
                     break;
-                case 2:
+                case ConsoleKey.D2:
                     SizeXY = 20;
                     break;
-                case 3:
+                case ConsoleKey.D3:
                     SizeXY = 30;
                     break;
                 default:
                     Console.Clear();
                     Console.WriteLine("Введите размерность поля:");
                     SizeXY = Convert.ToInt32(Console.ReadLine());
+                    break;
+                case ConsoleKey.D0:
+                    Environment.Exit(0);
                     break;
             }
 
@@ -46,9 +50,6 @@ namespace Game
             string player2Str = " X";
             string fieldStr = " #";
 
-            //FieldOut(Field, player1Str, player2Str, fieldStr, SizeXY);
-            //Console.ReadKey();
-
             int round = 2;
             do
             {
@@ -58,7 +59,6 @@ namespace Game
 
                 int x = random.Next(1, 7), y = random.Next(1, 7);
                 InterfaceMove(round, x, y, Field, player1Str, player2Str, fieldStr, SizeXY);
-                //Console.ReadKey();
 
             } while (true);
         }
