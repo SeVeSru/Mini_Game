@@ -7,15 +7,28 @@ namespace Game
         static void Main(string[] args)
         {
             int SizeXY;
-            Console.Write("Введите размер поля (По умолчанию 10): ");
-            string StringSizeXY = Console.ReadLine();
-            if (StringSizeXY == "")
+            Console.WriteLine("Выберите уровень сложности:");
+            Console.WriteLine("1. Легкий (10х10)");
+            Console.WriteLine("2. Нормальный (20х20)");
+            Console.WriteLine("3. Сложный (30х30)");
+            Console.WriteLine("4. Ввести в ручную размерность");
+            int Level = Convert.ToInt32(Console.ReadLine());
+            switch (Level)
             {
-                SizeXY = 10;
-            }
-            else
-            {
-                SizeXY = Convert.ToInt32(StringSizeXY);
+                case 1:
+                    SizeXY = 10;
+                    break;
+                case 2:
+                    SizeXY = 20;
+                    break;
+                case 3:
+                    SizeXY = 30;
+                    break;
+                default:
+                    Console.Clear();
+                    Console.WriteLine("Введите размерность поля:");
+                    SizeXY = Convert.ToInt32(Console.ReadLine());
+                    break;
             }
 
             int[,] Field = new int[SizeXY, SizeXY];
