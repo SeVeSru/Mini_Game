@@ -49,6 +49,7 @@ namespace Game
                 }
             } while (SizeXY == 0);
         }
+        
         static int SizeMenu()
         {
             Console.Clear();
@@ -78,65 +79,45 @@ namespace Game
 
         static void GamePVP(int SizeXY)
         {
-            int[,] Field = new int[SizeXY, SizeXY];
-            Random random = new Random();
-            int EndRandom = SizeXY / 2 + 2;
-            if (EndRandom > 10)
-            {
-                EndRandom = 10;
-            }
-            for (int i = 0; i < SizeXY; i++)
-            {
-                for (int j = 0; j < SizeXY; j++)
-                {
-                    Field[i, j] = 0;
-                }
-            }
-
+            int[,] Field = Pole(SizeXY);
             string player1Str = " O";
             string player2Str = " X";
             string fieldStr = " #";
             int win = 0;
-            int round = 2;
+            int round = 1;
             do
             {
                 if (round == 1)
                     round++;
                 else round = 1;
 
-                int x = random.Next(1, EndRandom), y = random.Next(1, EndRandom);
+                int x = Kubiki(SizeXY), y = Kubiki(SizeXY);
                 InterfaceMove(round, x, y, Field, player1Str, player2Str, fieldStr, SizeXY);
                 win = Winner(Field, SizeXY);
-
+                if (win == 1 || win == 2)
+                {
+                    Console.Clear();
+                    Console.WriteLine("---------------------");
+                    Console.WriteLine("!!!Выйграл " + win + " игрок!!!");
+                    Console.WriteLine("---------------------");
+                    FieldOut(Field, player1Str, player2Str, fieldStr, SizeXY);
+                    Console.WriteLine("\nНажмите любую клавишу что бы продолжить");
+                    Console.ReadKey();
+                }
             } while (win == 0);
         }
 
         static void GamePVE(int SizeXY)
         {
-            int[,] Field = new int[SizeXY, SizeXY];
-            Random random = new Random();
-
-            for (int i = 0; i < SizeXY; i++)
-            {
-                for (int j = 0; j < SizeXY; j++)
-                {
-                    Field[i, j] = 0;
-                }
-            }
-            int EndRandom = SizeXY / 2 + 2;
-            if (EndRandom > 10)
-            {
-                EndRandom = 10;
-            }
+            int[,] Field = Pole(SizeXY);
             string player1Str = " O";
             string player2Str = " X";
             string fieldStr = " #";
             int win = 0;
-
             int round = 1;
             do
             {
-                int x = random.Next(1, EndRandom), y = random.Next(1, EndRandom);
+                int x = Kubiki(SizeXY), y = Kubiki(SizeXY);
                 if (round == 1)
                 {
                     InterfaceMove(round, x, y, Field, player1Str, player2Str, fieldStr, SizeXY);
@@ -160,6 +141,26 @@ namespace Game
                 }
 
             } while (win == 0);
+        }
+
+        static int Kubiki(int SizeXY)
+        {
+            Random random = new Random();
+            int EndRandom = SizeXY / 2 + 1;
+            return random.Next(1, EndRandom);
+        }
+
+        static int [,] Pole(int SizeXY)
+        {
+            int[,] Field = new int[SizeXY, SizeXY];
+            for (int i = 0; i < SizeXY; i++)
+            {
+                for (int j = 0; j < SizeXY; j++)
+                {
+                    Field[i, j] = 0;
+                }
+            }
+            return Field;
         }
 
         static void InterfaceMove(int move, int x, int y, int[,] F, string p1, string p2, string f, int SizeXY)
